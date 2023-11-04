@@ -44,7 +44,6 @@ export class App extends Component {
   };
 
   render() {
-    const filteredContacts = this.getFilteredContacts();
     return (
       <div>
         <h1>Phonebook</h1>
