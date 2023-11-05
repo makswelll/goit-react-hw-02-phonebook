@@ -1,12 +1,9 @@
 import { Component } from 'react';
 import { PhoneNumber } from 'components/PhoneNumber/PhoneNumber';
+import { FormButton, FormStyle } from './ContactFormStyled';
 
 export class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
-
+  state = { name: '', number: '' };
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -21,7 +18,7 @@ export class ContactForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <FormStyle onSubmit={this.handleSubmit}>
         <input
           type="text"
           name="name"
@@ -31,8 +28,8 @@ export class ContactForm extends Component {
           placeholder="Enter name"
         />
         <PhoneNumber number={this.state.number} onChange={this.handleChange} />
-        <button type="submit">Add contact</button>
-      </form>
+        <FormButton type="submit">Add contact</FormButton>
+      </FormStyle>
     );
   }
 }

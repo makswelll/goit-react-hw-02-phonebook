@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { GlobalStyle } from './GlobalStyle';
+
 export class App extends Component {
   state = {
     contacts: [
@@ -15,8 +17,16 @@ export class App extends Component {
   };
 
   handleAddContact = (name, number) => {
-    if (name.trim() === '' || number.trim() === '') {
+    if (name === '' || number === '') {
       alert('Please enter both name and phone number for the contact.');
+      return;
+    }
+
+    const isNameExists = this.state.contacts.some(
+      contact => contact.name === name
+    );
+    if (isNameExists) {
+      alert(` ${name} is already in contacts`);
       return;
     }
 
@@ -54,6 +64,7 @@ export class App extends Component {
           contacts={this.getFilteredContacts()}
           onDeleteContact={this.deleteContact}
         />
+        <GlobalStyle />
       </div>
     );
   }

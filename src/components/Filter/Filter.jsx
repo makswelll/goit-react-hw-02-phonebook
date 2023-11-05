@@ -4,6 +4,6 @@ export const Filter = ({ value, onChange }) => (
     name="filter"
     value={value}
     onChange={onChange}
-    placeholder="Search contacts"
+    placeholder="Find contacts by name"
   />
 );
