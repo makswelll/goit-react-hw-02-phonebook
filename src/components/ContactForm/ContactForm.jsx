@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import { PhoneNumber } from 'components/PhoneNumber/PhoneNumber';
-import { FormButton, FormStyle } from './ContactFormStyled';
+import React, { Component } from 'react';
 
 export class ContactForm extends Component {
   state = { name: '', number: '' };
+
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -12,13 +11,20 @@ export class ContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { name, number } = this.state;
+
+    if (name === '' || number === '') {
+      alert('Please enter both name and phone number for the contact.');
+      return;
+    }
+
     this.props.onAddContact(name, number);
+
     this.setState({ name: '', number: '' });
   };
 
   render() {
     return (
-      <FormStyle onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <input
           type="text"
           name="name"
@@ -27,9 +33,16 @@ export class ContactForm extends Component {
           required
           placeholder="Enter name"
         />
-        <PhoneNumber number={this.state.number} onChange={this.handleChange} />
-        <FormButton type="submit">Add contact</FormButton>
-      </FormStyle>
+        <input
+          type="text"
+          name="number"
+          value={this.state.number}
+          onChange={this.handleChange}
+          required
+          placeholder="Enter phone number"
+        />
+        <button type="submit">Add contact</button>
+      </form>
     );
   }
 }

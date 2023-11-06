@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
+
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -16,26 +17,6 @@ export class App extends Component {
     filter: '',
   };
 
-  handleAddContact = (name, number) => {
-    if (name === '' || number === '') {
-      alert('Please enter both name and phone number for the contact.');
-      return;
-    }
-
-    const isNameExists = this.state.contacts.some(
-      contact => contact.name === name
-    );
-    if (isNameExists) {
-      alert(` ${name} is already in contacts`);
-      return;
-    }
-
-    const newContact = { id: nanoid(), name, number };
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
-    }));
-  };
-
   handleChangeFilter = e => {
     this.setState({ filter: e.target.value });
   };
@@ -50,6 +31,21 @@ export class App extends Component {
   deleteContact = contactId => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
+  handleAddContact = (name, number) => {
+    const normalizedName = name.toLowerCase();
+    const isNameExists = this.state.contacts.some(
+      contact => contact.name.toLowerCase() === normalizedName
+    );
+    if (isNameExists) {
+      alert(`Contact with name '${name}' already exists!`);
+      return;
+    }
+
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, { id: `id-${nanoid()}`, name, number }],
     }));
   };
 
